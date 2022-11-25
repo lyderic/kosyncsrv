@@ -85,6 +85,10 @@ func authorize(c *gin.Context) {
 	})
 }
 
+func getPing(c *gin.Context) {
+	c.String(http.StatusOK, "pong")
+}
+
 func getProgress(c *gin.Context) {
 	ruser := authorizeRequest(c)
 	var rDocid requestDocid
@@ -128,6 +132,7 @@ func main() {
 	initDB()
 
 	router := gin.Default()
+	router.GET("/ping", getPing)
 	router.POST("/users/create", register)
 	router.GET("/users/auth", authorize)
 	router.GET("/syncs/progress/:document", getProgress)
